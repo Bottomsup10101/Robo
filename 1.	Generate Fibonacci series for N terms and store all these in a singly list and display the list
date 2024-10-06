@@ -1,0 +1,86 @@
+
+
+#include<iostream>
+using namespace std;
+
+struct Node {
+int data;
+Node* next;
+
+Node(int data) {
+this->data = data;
+this->next = nullptr;
+}
+};
+
+class LinkedList { Node* head;
+
+public:
+LinkedList() {
+head = nullptr;
+}
+
+// insert a new node at the end void insert(int data) {
+Node* newNode = new Node(data);
+
+if (head == nullptr) { head = newNode;
+} else {
+Node* temp = head;
+while (temp->next != nullptr) { temp = temp->next;
+}
+temp->next = newNode;
+}
+}
+
+void display() {
+ 
+if (head == nullptr) {
+cout << "List is empty" << endl; return;
+}
+
+Node* temp = head;
+while (temp != nullptr) {
+cout << temp->data << " "; temp = temp->next;
+}
+cout << endl;
+}
+
+// Destructor
+~LinkedList() {
+Node* current = head;
+while (current != nullptr) {
+Node* nextNode = current->next; delete current;
+current = nextNode;
+}
+}
+};
+
+void generateFibonacci(LinkedList &list, int N) { if (N <= 0) {
+cout << "Number of terms must be positive." << endl; return;
+}
+
+int a = 0, b = 1; list.insert(a);
+
+if (N > 1) {
+list.insert(b);
+}
+
+for (int i = 3; i <= N; i++) { int next = a + b;
+list.insert(next);
+a = b;
+b = next;
+}
+}
+int main() {
+LinkedList list;
+int N;
+cout << "Enter the number of Fibonacci terms: ";
+cin >> N;
+generateFibonacci(list, N);
+cout << "Fibonacci series: ";
+list.display();
+return 0;
+}
+ 
+ 
+ 
