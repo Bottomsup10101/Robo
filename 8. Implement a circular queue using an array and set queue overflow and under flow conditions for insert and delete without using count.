@@ -1,0 +1,97 @@
+
+#include <iostream>
+using namespace std;
+class CircularQueue {
+int* arr;
+int size;
+int front;
+int rear;
+public:
+CircularQueue(int s) { //constructor
+size = s;
+arr = new int[size];
+front = -1;
+rear = -1;
+}
+~CircularQueue() { //destructor
+delete[] arr;
+}
+bool isEmpty() {
+return (front == -1);
+}
+bool isFull() {
+return ((rear + 1) % size == front);
+}
+void enqueue(int data) {
+if (isFull()) {
+cout << "Queue Overflow" << endl;
+return;
+}
+// Inserting the first element
+if (front == -1) {
+front = 0;
+}
+// Update rear position in a circular manner
+rear = (rear + 1) % size;
+arr[rear] = data;
+cout << "Inserted " << data << endl;
+}
+int dequeue() {
+if (isEmpty()) {
+cout << "Queue Underflow" << endl;
+return -1;
+}
+int data = arr[front];
+// If the queue has only one element, reset the queue
+if (front == rear) {
+front = -1;
+rear = -1;
+} else {
+// Update front position in a circular manner
+front = (front + 1) % size;
+}
+return data;
+}
+int peek() {
+if (isEmpty()) {
+cout << "Queue is empty" << endl;
+return -1;
+}
+return arr[front];
+}
+void printQueue() {
+if (isEmpty()) {
+cout << "Queue is empty" << endl;
+return;
+}
+int i = front;
+cout << "Queue elements: ";
+while (true) {
+cout << arr[i] << " ";
+if (i == rear) {
+break;
+}
+i = (i + 1) % size; // Move in a circular manner
+}
+cout << endl;
+}
+};
+int main() {
+CircularQueue q(5);
+q.enqueue(10);
+q.enqueue(20);
+q.enqueue(30);
+q.enqueue(40);
+q.printQueue();
+// Deleting elements
+cout << "Dequeued: " << q.dequeue() << endl;
+cout << "Dequeued: " << q.dequeue() << endl;
+q.printQueue();
+q.enqueue(50);
+q.enqueue(60);
+q.printQueue();
+q.enqueue(70);
+q.enqueue(80); // overflow message
+cout << "Front element: " << q.peek() << endl;
+return 0;
+}
