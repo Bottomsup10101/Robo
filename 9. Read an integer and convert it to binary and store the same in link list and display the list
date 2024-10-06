@@ -1,0 +1,35 @@
+
+#include <iostream>
+using namespace std;
+struct Node {
+int data;
+Node* next;
+};
+//insert at the start
+void insertNode(Node** head, int data) {
+Node* newNode = new Node();
+newNode->data = data;
+newNode->next = *head;
+*head = newNode;
+}
+void displayList(Node* head) {
+while (head != nullptr) {
+cout << head->data << " ";
+head = head->next;
+}
+cout << endl;
+}
+int main() {
+int num;
+cout << "Enter an integer: ";
+cin >> num;
+Node* head = nullptr;
+while (num > 0) {
+int digit = num % 2;
+insertNode(&head, digit);
+num /= 2;
+}
+cout << "Binary representation: ";
+displayList(head);
+return 0;
+}
