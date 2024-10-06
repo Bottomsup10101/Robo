@@ -1,0 +1,84 @@
+
+#include<iostream>
+using namespace std;
+struct Node {
+int data;
+Node* next;
+Node(int data) {
+this->data = data;
+this->next = nullptr;
+}
+};
+class CircularLinkedList {
+Node* head;
+public:
+CircularLinkedList() {
+head = nullptr;
+}
+void insert(int data) {
+Node* newNode = new Node(data);
+if (head == nullptr) {
+head = newNode;
+head->next = head;
+} else {
+Node* temp = head;
+while (temp->next != head) {
+temp = temp->next;
+}
+temp->next = newNode;
+newNode->next = head;
+}
+}
+void display() {
+if (head == nullptr) {
+cout << "List is empty" << endl;
+return;
+}
+Node* temp = head;
+while (temp->next != head) { // Traverse until the last node is
+reached
+cout << temp->data << " ";
+temp = temp->next;
+}
+// Print the last node
+cout << temp->data << endl;
+}
+~CircularLinkedList() {
+if (head == nullptr) return;
+Node* current = head;
+Node* nextNode;
+// Break the circular link to make cleanup easier
+while (current->next != head) {
+nextNode = current->next;
+delete current;
+current = nextNode;
+}
+delete current; // Delete last node
+}
+};
+bool isPrime(int num) {
+if (num < 2) return false;
+for (int i = 2; i * i <= num; i++) {
+if (num % i == 0) return false;
+}
+return true;
+}
+void generatePrimes(CircularLinkedList& list, int N) {
+int count = 0;
+int num = 2;
+while (count < N) {
+if (isPrime(num)) {
+list.insert(num);
+count++;
+}
+num++;
+}
+}
+int main() {
+CircularLinkedList list;
+int N = 15;
+generatePrimes(list, N);
+cout << "First " << N << " prime numbers in circular linked list: ";
+list.display();
+return 0;
+}
