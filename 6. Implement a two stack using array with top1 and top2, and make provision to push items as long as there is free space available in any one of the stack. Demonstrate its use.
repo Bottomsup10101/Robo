@@ -1,0 +1,81 @@
+
+#include <iostream>
+using namespace std;
+class TwoStack {
+int* arr;
+int size;
+int top1;
+int top2;
+public:
+TwoStack(int n) {
+size = n;
+arr = new int[n];
+top1 = -1;
+top2 = n;
+}
+void push1(int x) {
+if (top1 < top2 - 1) {
+arr[++top1] = x;
+cout << "Pushed " << x << " to stack 1" << endl;
+} else {
+cout << "Stack 1 is full" << endl;
+}
+}
+void push2(int x) {
+if (top1 < top2 - 1) {
+arr[--top2] = x;
+cout << "Pushed " << x << " to stack 2" << endl;
+} else {
+cout << "Stack 2 is full" << endl;
+}
+}
+int pop1() {
+if (top1 >= 0) {
+int x = arr[top1--];
+cout << "Popped " << x << " from stack 1" << endl;
+return x;
+} else {
+cout << "Stack 1 is empty" << endl;
+return -1;
+}
+}
+int pop2() {
+if (top2 < size) {
+int x = arr[top2++];
+cout << "Popped " << x << " from stack 2" << endl;
+return x;
+} else {
+cout << "Stack 2 is empty" << endl;
+return -1;
+}
+}
+void displayStack1() {
+cout << "Stack 1: ";
+for (int i = 0; i <= top1; i++) {
+cout << arr[i] << " ";
+}
+cout << endl;
+}
+void displayStack2() {
+cout << "Stack 2: ";
+for (int i = size - 1; i >= top2; i--) {
+cout << arr[i] << " ";
+}
+cout << endl;
+}
+};
+int main() {
+TwoStack ts(10);
+ts.push1(5);
+ts.push2(10);
+ts.push2(15);
+ts.push1(7);
+ts.push2(20);
+ts.displayStack1();
+ts.displayStack2();
+ts.pop1();
+ts.pop2();
+ts.displayStack1();
+ts.displayStack2();
+return 0;
+}
